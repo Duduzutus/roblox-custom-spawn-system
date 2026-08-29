@@ -11,21 +11,13 @@ print("🔍 Procurando spawns padrão para desabilitar...")
 
 -- Função para desabilitar spawns
 local function disableDefaultSpawns()
-	-- Procura por Spawns em diferentes locais
-	local spawnLocations = {
-		workspace:FindFirstChild("Spawns"),
-		workspace:FindFirstChild("SpawnLocation"),
-		workspace:FindFirstChild("Spawn"),
-	}
-	
-	-- Também procura por qualquer parte com "Spawn" no nome
+	-- Procura por qualquer parte com tipo SpawnLocation
 	for _, child in pairs(workspace:GetDescendants()) do
 		if child:IsA("SpawnLocation") then
-			-- Desabilita a spawn location
+			-- Desabilita a spawn location completamente
 			child.CanCollide = false
 			child.Transparency = 1
-			child.TopSurface = Enum.SurfaceType.Smooth
-			child.BottomSurface = Enum.SurfaceType.Smooth
+			child.CanTouch = false
 			
 			-- Remove o script de spawn se tiver
 			local humanoidOnTouch = child:FindFirstChildOfClass("Script")
@@ -48,6 +40,7 @@ workspace.DescendantAdded:Connect(function(descendant)
 		wait(0.1)
 		descendant.CanCollide = false
 		descendant.Transparency = 1
+		descendant.CanTouch = false
 		print("✅ Novo spawn padrão foi desabilitado:", descendant.Name)
 	end
 end)
