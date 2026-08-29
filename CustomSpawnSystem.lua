@@ -210,21 +210,22 @@ local function createSpawnBlock(position)
 		customSpawnBlock:Destroy()
 	end
 
-	-- Cria novo bloco - POSITIONED CORRETAMENTE NO CHÃO
+	-- Cria novo bloco - ANCHORED e SEM GRAVIDADE
 	customSpawnBlock = Instance.new("Part")
 	customSpawnBlock.Name = "CustomSpawnBlock"
 	customSpawnBlock.Shape = Enum.PartType.Block
 	customSpawnBlock.Size = Vector3.new(6, 1, 6)
-	customSpawnBlock.Position = Vector3.new(position.X, position.Y + 0.5, position.Z) -- Posiciona no chão
+	customSpawnBlock.Position = position -- Posição exata clicada
 	customSpawnBlock.BrickColor = BrickColor.new("Bright yellow")
 	customSpawnBlock.Material = Enum.Material.Neon
 	customSpawnBlock.CanCollide = false -- NÃO colide com nada
+	customSpawnBlock.Anchored = true -- FIXO NO LUGAR - não cai
 	customSpawnBlock.Transparency = 0.3
 	customSpawnBlock.TopSurface = Enum.SurfaceType.Smooth
 	customSpawnBlock.BottomSurface = Enum.SurfaceType.Smooth
 	customSpawnBlock.Parent = workspace
 
-	print("✅ Bloco de spawn criado em:", Vector3.new(position.X, position.Y, position.Z))
+	print("✅ Bloco de spawn criado e FIXO em:", position)
 	return customSpawnBlock
 end
 
@@ -236,8 +237,8 @@ local function spawnPlayerOnBlock()
 
 	local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
 	if humanoidRootPart then
-		-- Spawna no topo do bloco, não teleporta imediatamente
-		local spawnPosition = customSpawnBlock.Position + Vector3.new(0, 2, 0)
+		-- Spawna no topo do bloco
+		local spawnPosition = customSpawnBlock.Position + Vector3.new(0, 3, 0)
 		humanoidRootPart.CFrame = CFrame.new(spawnPosition)
 		print("🎯 Jogador spawned no bloco customizado!")
 	end
@@ -247,7 +248,7 @@ end
 -- EVENTOS DOS BOTÕES
 -- ========================================
 
--- Botão 1: Ativar/Desativar Spawn
+-- Botão 1: Ativar/Desativar Spawn (SEM TELEPORTAR)
 button1.MouseButton1Click:Connect(function()
 	if not spawnBlockCreated then
 		print("⚠️ Crie um bloco de spawn primeiro!")
@@ -257,7 +258,9 @@ button1.MouseButton1Click:Connect(function()
 	spawnEnabled = not spawnEnabled
 	updateButton1Visual()
 	
+	-- NÃO TELEPORTA ao ativar - apenas marca como ativado
 	print("Spawn:", spawnEnabled and "ATIVADO" or "DESATIVADO")
+	print("💡 Você vai spawnar neste bloco quando morrer/regenerar!")
 end)
 
 -- Botão 2: Selecionar posição
@@ -292,7 +295,7 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
 			selectedPosition = rayResult.Position
 			print("✅ Posição selecionada:", selectedPosition)
 
-			-- Cria o bloco NA POSIÇÃO CORRETA
+			-- Cria o bloco NA POSIÇÃO CLICADA - FIXO E PARADO
 			createSpawnBlock(selectedPosition)
 
 			spawnBlockCreated = true
@@ -310,15 +313,17 @@ end)
 -- ========================================
 
 local function onCharacterAdded(newCharacter)
-	print("🔄 Personagem adicionado - aguardando Humanoid...")
+	print("🔄 Personagem adicionado...")
 	
+	local humanoidRootPart = newCharacter:WaitForChild("HumanoidRootPart")
 	local humanoid = newCharacter:WaitForChild("Humanoid")
 	
 	-- Aguarda um pouco para o jogador estar completamente spawnado
-	wait(0.1)
+	wait(0.2)
 	
 	-- SÓ teleporta se o spawn estiver ativado E o bloco existir
 	if spawnEnabled and spawnBlockCreated and customSpawnBlock then
+		print("✅ Spawning no bloco customizado!")
 		spawnPlayerOnBlock()
 	end
 end
@@ -335,4 +340,5 @@ updateButton2Visual()
 
 print("✅ Interface de Spawn Customizado carregada com sucesso!")
 print("📍 Clique no botão azul para criar seu spawn customizado")
-print("💡 O spawn funciona APENAS quando você morre/respawna com o botão ativado")
+print("💡 O bloco fica PARADO e FIXO no lugar!")
+print("⚠️ NÃO teleporta ao ativar - spawna só quando morre/regenera")
