@@ -1,29 +1,43 @@
-# 📋 INSTRUÇÕES DE INSTALAÇÃO
+# 📋 INSTALAÇÃO - Sistema de Spawn Customizado
 
-## ⚠️ USE APENAS UM SCRIPT!
+## 🎯 Scripts Necessários
 
-### **Passo 1:** Copie o arquivo `CustomSpawnSystem.lua`
+Este repositório contém **2 scripts essenciais** para o sistema de spawn customizado funcionar:
 
-### **Passo 2:** No Roblox Studio
-1. Vá para **StarterPlayer** > **StarterCharacterScripts**
-2. Insira um novo **LocalScript**
-3. Cole TODO o conteúdo do `CustomSpawnSystem.lua`
-4. **Salve e teste!**
+### **1️⃣ CustomSpawnSystem.lua** (LocalScript)
+- **Onde colocar:** StarterPlayer → StarterCharacterScripts
+- **Tipo:** LocalScript
+- **Função:** Interface GUI + Criação e gerenciamento do spawn customizado
 
-### **Passo 3:** Como usar no jogo
-- ✅ A interface aparece automaticamente no canto superior esquerdo
-- 🟨 **Botão Azul:** Clique para selecionar onde criar o bloco
-- 🎯 Clique no mapa/chão para escolher a posição
-- 🔴 **Botão Vermelho:** Ativa/Desativa o spawn customizado
-- 🟡 O bloco amarelo será criado e você vai spawnar lá quando morrer
-
-## 🔧 Características
-✅ Interface profissional e moderna
-✅ Bloco amarelo semi-transparente e sem colisão
-✅ Desabilita spawns padrão quando ativado
-✅ Teleporta automaticamente no bloco ao respawnar
-✅ Visual responsivo com hover effects
+### **2️⃣ DisableDefaultSpawns.lua** (ServerScript)
+- **Onde colocar:** ServerScriptService
+- **Tipo:** ServerScript
+- **Função:** Desabilita todos os spawns padrão do jogo
 
 ---
 
-**Pronto! Sistema de spawn customizado instalado com sucesso! 🎉**
+## 🚀 Como Instalar
+
+1. **Copie `CustomSpawnSystem.lua`**
+   - Em Roblox Studio, vá para StarterPlayer → StarterCharacterScripts
+   - Insira um novo LocalScript
+   - Cole o conteúdo completo do arquivo
+
+2. **Copie `DisableDefaultSpawns.lua`**
+   - Em Roblox Studio, vá para ServerScriptService
+   - Insira um novo Script
+   - Cole o conteúdo completo do arquivo
+
+3. **Teste o jogo!** ✅
+
+---
+
+## 🎮 Como Usar
+
+- 🟨 **Botão Azul:** Clique e depois na posição para criar o bloco amarelo
+- 🔴 **Botão Vermelho:** Ativa/Desativa o spawn customizado
+- ☠️ **Morra:** Você respawna automaticamente no bloco amarelo
+
+---
+
+**Sistema pronto para usar! 🎉**
